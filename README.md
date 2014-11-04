@@ -20,7 +20,7 @@ Dependencies
 
 SBT:
 	
-	libraryDependencies += "no.arktekk" %% "uri-template" % "1.1"
+	libraryDependencies += "no.arktekk" %% "uri-template" % "1.0.2"
 
 Maven:
 
