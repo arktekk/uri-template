@@ -256,27 +256,18 @@ object URITemplateParser {
         %(0xfdf0, 0xffef),
         %(0x10000, 0x1fffd),
         %(0x20000, 0x2fffd),
-        %(
-          0x30000,
-          0x3fffd
-        ),
+        %(0x30000, 0x3fffd),
         %(0x40000, 0x4fffd),
         %(0x50000, 0x5fffd),
         %(0x60000, 0x6fffd),
         %(0x70000, 0x7fffd),
         %(0x80000, 0x8fffd),
-        %(
-          0x90000,
-          0x9fffd
-        ),
+        %(0x90000, 0x9fffd),
         %(0xa0000, 0xafffd),
         %(0xb0000, 0xbfffd),
         %(0xc0000, 0xcfffd),
         %(0xd0000, 0xdfffd),
-        %(
-          0xe1000,
-          0xefffd
-        )
+        %(0xe1000, 0xefffd)
       ).reduce(_ | _) ^^ (Unencoded.apply)
     lazy val iprivate =
       (%(0xe000, 0xf8ff) | %(0xf0000, 0xffffd) | %(0x100000, 0x10fffd)) ^^ (Unencoded.apply)
