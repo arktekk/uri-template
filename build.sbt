@@ -20,8 +20,11 @@ ThisBuild / scalaVersion := Scala3 // the default Scala
 
 lazy val root = tlCrossRootProject.aggregate(core)
 
-lazy val core = crossProject(JVMPlatform, JSPlatform)
+lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .jsSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "1.2.0").toMap
+  )
+  .nativeSettings(
     tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "1.2.0").toMap
   )
   .jvmSettings(
