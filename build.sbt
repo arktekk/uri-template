@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion := "2.0" // your current series x.y
+ThisBuild / tlBaseVersion := "1.2" // your current series x.y
 
 ThisBuild / organization := "no.arktekk"
 ThisBuild / organizationName := "Arktekk"
@@ -21,6 +21,12 @@ ThisBuild / scalaVersion := Scala3 // the default Scala
 lazy val root = tlCrossRootProject.aggregate(core)
 
 lazy val core = crossProject(JVMPlatform, JSPlatform)
+  .jsSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "1.2.0").toMap
+  )
+  .jvmSettings(
+    tlVersionIntroduced := Map("3" -> "1.2.0")
+  )
   .in(file("core"))
   .settings(
     name := "uri-template",
