@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion := "1.2" // your current series x.y
+ThisBuild / tlBaseVersion := "2.0" // your current series x.y
 
 ThisBuild / organization := "no.arktekk"
 ThisBuild / organizationName := "Arktekk"
