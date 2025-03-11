@@ -1,44 +1,41 @@
-ThisBuild / description := "URI Template"
+ThisBuild / tlBaseVersion := "1.2" // your current series x.y
 
-ThisBuild / scalacOptions := Seq("-deprecation", "-unchecked")
+ThisBuild / organization := "no.arktekk"
+ThisBuild / organizationName := "Arktekk"
+ThisBuild / startYear := Some(2011)
+ThisBuild / licenses := Seq(License.Apache2)
+ThisBuild / developers ++= List(
+  tlGitHubDev("teigen", "Jon Anders Teigen"),
+  tlGitHubDev("hamnis", "Erlend Hamnaberg")
+)
 
-lazy val root = (project in file("."))
+ThisBuild / sonatypeCredentialHost := xerial.sbt.Sonatype.sonatypeLegacy
+
+val Scala212 = "2.12.20"
+val Scala213 = "2.13.16"
+val Scala3   = "3.3.4"
+
+ThisBuild / crossScalaVersions := Seq(Scala212, Scala213, Scala3)
+ThisBuild / scalaVersion := Scala3 // the default Scala
+
+lazy val root = tlCrossRootProject.aggregate(core)
+
+lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+  .jsSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "1.2.0").toMap
+  )
+  .nativeSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "1.2.0").toMap
+  )
+  .jvmSettings(
+    tlVersionIntroduced := Map("2.12" -> "1.1.0", "2.13" -> "1.1.0", "3" -> "1.2.0")
+  )
+  .in(file("core"))
   .settings(
-    Seq(
-      organization := "no.arktekk",
-      name := "uri-template",
-      scalaVersion := crossScalaVersions.value.head,
-      crossScalaVersions := Seq("2.12.13", "2.13.4"),
-      publishTo := {
-        if (isSnapshot.value) {
-          Some(Opts.resolver.sonatypeSnapshots)
-        } else {
-          Some(Opts.resolver.sonatypeStaging)
-        }
-      },
-      pomIncludeRepository := { x => false },
-      credentials += Credentials(Path.userHome / ".sbt" / "arktekk-credentials"),
-      libraryDependencies ++= Seq(
-        "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-        "org.scalatest"          %% "scalatest"                % "3.2.3" % "test"
-      ),
-      releaseCrossBuild := true,
-      releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-      homepage := Some(new URL("http://github.com/arktekk/uri-template")),
-      startYear := Some(2011),
-      licenses := Seq(("Apache 2", new URL("http://www.apache.org/licenses/LICENSE-2.0.txt"))),
-      scmInfo := Some(
-        ScmInfo(
-          browseUrl = new URL("https://github.com/arktekk/uri-template"),
-          connection = "scm:git:git://github.com/arktekk/uri-template.git",
-          devConnection = Some("scm:git:git@github.com:arktekk/uri-template.git")
-        )
-      ),
-      developers += Developer(
-        id = "teigen",
-        name = "Jon-Anders Teigen",
-        email = "",
-         url = new URL("http://twitter.com/jteigen")
-      )
+    name := "uri-template",
+    description := "Uri Template",
+    libraryDependencies ++= Seq(
+      "org.scala-lang.modules" %%% "scala-parser-combinators" % "2.4.0",
+      "org.scalatest"          %%% "scalatest"                % "3.2.19" % "test"
     )
   )
